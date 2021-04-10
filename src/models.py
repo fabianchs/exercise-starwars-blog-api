@@ -18,7 +18,7 @@ class FavPeople(db.Model):
     # Notice that each column is also a normal Python instance attribute.
     id = db.Column(db.Integer, primary_key=True)
     people_id = db.Column(db.Integer, primary_key=True)
-    user_id = Column(db.Integer, ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, ForeignKey('user.id'))
 
 class FavPlanet(db.Model):
     __tablename__ = 'FavPlanet'
