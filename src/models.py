@@ -4,7 +4,7 @@ db = SQLAlchemy()
 
 
 
-class User(Base):
+class User(db.Model):
     __tablename__ = 'user'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
@@ -12,7 +12,7 @@ class User(Base):
     username = db.Column(db.String(250), nullable=False)
     password = db.Column(db.String(250), nullable=False)
 
-class FavPeople(Base):
+class FavPeople(db.Model):
     __tablename__ = 'FavPeople'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
@@ -20,7 +20,7 @@ class FavPeople(Base):
     people_id = db.Column(db.Integer, primary_key=True)
     user_id = Column(db.Integer, ForeignKey('user.id'))
 
-class FavPlanet(Base):
+class FavPlanet(db.Model):
     __tablename__ = 'FavPlanet'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
@@ -28,7 +28,7 @@ class FavPlanet(Base):
     people_id = db.Column(Integer, primary_key=True)
     user_id = db.Column(Integer, ForeignKey('user.id'))
 
-class Characters(Base):
+class Characters(db.Model):
     __tablename__ = 'Characters'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
@@ -51,7 +51,7 @@ class Characters(Base):
     url = db.Column(db.String, primary_key=True)
     vehicles = db.Column(db.String, primary_key=True)
     
-class Planets(Base):
+class Planets(db.Model):
     __tablename__ = 'Planets'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
