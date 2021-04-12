@@ -9,12 +9,10 @@ from sqlalchemy import create_engine
 db = SQLAlchemy()
 
 class User(db.Model):
-    __tablename__ = 'user'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(250), nullable=False)
-    password = db.Column(db.String(250), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
 
     def __repr__(self):
@@ -28,27 +26,27 @@ class User(db.Model):
         }
 
 class Characters(db.Model):
-    __tablename__ = 'Characters'
+
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
-    id = db.Column(db.Integer, ForeignKey('FavPeople.people_id'))
-    people_id = db.Column(db.String, primary_key=True)
-    birth_year = db.Column(db.String, primary_key=True)
-    eye_color = db.Column(db.String, primary_key=True)
-    films = db.Column(db.String, primary_key=True)
-    gender = db.Column(db.String, primary_key=True)
-    hair_color = db.Column(db.String, primary_key=True)
-    height = db.Column(db.String, primary_key=True)
-    homeworld = db.Column(db.String, primary_key=True)
-    mass= db.Column(db.String, primary_key=True)
-    name= db.Column(db.String, primary_key=True)
-    skin_color = db.Column(db.String, primary_key=True)
-    created = db.Column(db.String, primary_key=True)
-    edited = db.Column(db.String, primary_key=True)
-    species = db.Column(db.String, primary_key=True)
-    starships = db.Column(db.String, primary_key=True)
-    url = db.Column(db.String, primary_key=True)
-    vehicles = db.Column(db.String, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    people_id = db.Column(db.String, unique=False, nullable=False)
+    birth_year = db.Column(db.String, unique=False, nullable=False)
+    eye_color = db.Column(db.String, unique=False, nullable=False)
+    films = db.Column(db.String, unique=False, nullable=False)
+    gender = db.Column(db.String,unique=False, nullable=False)
+    hair_color = db.Column(db.String, unique=False, nullable=False)
+    height = db.Column(db.String, unique=False, nullable=False)
+    homeworld = db.Column(db.String, unique=False, nullable=False)
+    mass= db.Column(db.String, unique=False, nullable=False)
+    name= db.Column(db.String, unique=False, nullable=False)
+    skin_color = db.Column(db.String, unique=False, nullable=False)
+    created = db.Column(db.String, unique=False, nullable=False)
+    edited = db.Column(db.String, unique=False, nullable=False)
+    species = db.Column(db.String, unique=False, nullable=False)
+    starships = db.Column(db.String, unique=False, nullable=False)
+    url = db.Column(db.String, unique=False, nullable=False)
+    vehicles = db.Column(db.String, unique=False, nullable=False)
 
     def __repr__(self):
         return '<Characters %r>' % self.people_id
@@ -75,25 +73,24 @@ class Characters(db.Model):
 
     
 class Planets(db.Model):
-    __tablename__ = 'Planets'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
-    id = db.Column(db.Integer, ForeignKey('FavPlanet.people_id'))
-    climate = db.Column(db.String, primary_key=True)
-    created = db.Column(db.String, primary_key=True)
-    diameter = db.Column(db.String, primary_key=True)
-    edited = db.Column(db.String, primary_key=True)
-    films = db.Column(db.String, primary_key=True)
-    gravity = db.Column(db.String, primary_key=True)
-    name = db.Column(db.String, primary_key=True)
-    orbital_period = db.Column(db.String, primary_key=True)
-    population= db.Column(db.String, primary_key=True)
-    residents= db.Column(db.String, primary_key=True)
-    rotation_period = db.Column(db.String, primary_key=True)
-    surface_water = db.Column(db.String, primary_key=True)
-    terrain = db.Column(db.String, primary_key=True)
-    url = db.Column(db.String, primary_key=True)
-    starships = db.Column(db.String, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    climate = db.Column(db.String, unique=False, nullable=False)
+    created = db.Column(db.String, unique=False, nullable=False)
+    diameter = db.Column(db.String, unique=False, nullable=False)
+    edited = db.Column(db.String, unique=False, nullable=False)
+    films = db.Column(db.String, unique=False, nullable=False)
+    gravity = db.Column(db.String, unique=False, nullable=False)
+    name = db.Column(db.String, unique=False, nullable=False)
+    orbital_period = db.Column(db.String, unique=False, nullable=False)
+    population= db.Column(db.String, unique=False, nullable=False)
+    residents= db.Column(db.String, unique=False, nullable=False)
+    rotation_period = db.Column(db.String, unique=False, nullable=False)
+    surface_water = db.Column(db.String, unique=False, nullable=False)
+    terrain = db.Column(db.String, unique=False, nullable=False)
+    url = db.Column(db.String, unique=False, nullable=False)
+    starships = db.Column(db.String, unique=False, nullable=False)
 
     def __repr__(self):
         return '<Planets %r>' % self.id
@@ -118,12 +115,11 @@ class Planets(db.Model):
         }
 
 class FavPeople(db.Model):
-    __tablename__ = 'FavPeople'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = db.Column(db.Integer, primary_key=True)
     people_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, primary_key=True)
 
     def __repr__(self):
         return '<Fav People %r>' % self.people_id
@@ -136,12 +132,12 @@ class FavPeople(db.Model):
         }
 
 class FavPlanet(db.Model):
-    __tablename__ = 'FavPlanet'
+
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = db.Column(Integer, primary_key=True)
-    people_id = db.Column(Integer, primary_key=True)
-    user_id = db.Column(Integer, ForeignKey('user.id'))
+    people_id = db.Column(Integer, unique=False, nullable=False)
+    user_id = db.Column(Integer, unique=False, nullable=False)
 
 
     def __repr__(self):
