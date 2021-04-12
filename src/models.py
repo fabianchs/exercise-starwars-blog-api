@@ -6,11 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 
-
-
 db = SQLAlchemy()
-
-
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -31,22 +27,6 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
 
-class FavPeople(db.Model):
-    __tablename__ = 'FavPeople'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
-    id = db.Column(db.Integer, primary_key=True)
-    people_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey('user.id'))
-
-class FavPlanet(db.Model):
-    __tablename__ = 'FavPlanet'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
-    id = db.Column(Integer, primary_key=True)
-    people_id = db.Column(Integer, primary_key=True)
-    user_id = db.Column(Integer, ForeignKey('user.id'))
-
 class Characters(db.Model):
     __tablename__ = 'Characters'
     # Here we define columns for the table person
@@ -63,12 +43,36 @@ class Characters(db.Model):
     mass= db.Column(db.String, primary_key=True)
     name= db.Column(db.String, primary_key=True)
     skin_color = db.Column(db.String, primary_key=True)
-    crated = db.Column(db.String, primary_key=True)
+    created = db.Column(db.String, primary_key=True)
     edited = db.Column(db.String, primary_key=True)
     species = db.Column(db.String, primary_key=True)
     starships = db.Column(db.String, primary_key=True)
     url = db.Column(db.String, primary_key=True)
     vehicles = db.Column(db.String, primary_key=True)
+
+    def __repr__(self):
+        return '<Characters %r>' % self.people_id
+
+    def serialize(self):
+        return {
+            "people_id": self.people_id,
+            "birth_year": self.birth_year,
+            "eye_color": self.eye_color,
+            "films" : self.films,
+            "hair_color": self.hair_color,
+            "height": self.height,
+            "homeworld": self.homeworld,
+            "mass": self.mass,
+            "name": self.name,
+            "skin_color":  self.skin_color,
+            "created": self.created,
+            "edited":  self.edited,
+            "species": self.species,
+            "starships": self.starships,
+            "url": self.url,
+            "vehicles": self.vehicles
+        }
+
     
 class Planets(db.Model):
     __tablename__ = 'Planets'
@@ -91,6 +95,64 @@ class Planets(db.Model):
     url = db.Column(db.String, primary_key=True)
     starships = db.Column(db.String, primary_key=True)
 
+    def __repr__(self):
+        return '<Planets %r>' % self.id
+    def serialize(self):
+        return {
+            "climate": self.climate,
+            "created": self.created,
+            "diameter": self.diameter,
+            "edited" : self.edited,
+            "films": self.films,
+            "gravity": self.gravity,
+            "name": self.name,
+            "orbital_period": self.orbital_period,
+            "population": self.population,
+            "residents":  self.residents,
+            "rotation_period": self.rotation_period,
+            "surface_water":  self.surface_water,
+            "terrain": self.terrain,
+            "url": self.url,
+            "starships": self.starships
+
+        }
+
+class FavPeople(db.Model):
+    __tablename__ = 'FavPeople'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id = db.Column(db.Integer, primary_key=True)
+    people_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Fav People %r>' % self.people_id
+        
+    def serialize(self):
+        return {
+            "people_id": self.people_id,
+            "user_id": self.user_id,
+            # do not serialize the password, its a security breach
+        }
+
+class FavPlanet(db.Model):
+    __tablename__ = 'FavPlanet'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id = db.Column(Integer, primary_key=True)
+    people_id = db.Column(Integer, primary_key=True)
+    user_id = db.Column(Integer, ForeignKey('user.id'))
+
+
+    def __repr__(self):
+        return '<Fav Planet %r>' % self.people_id
+        
+    def serialize(self):
+        return {
+            "people_id": self.people_id,
+            "user_id": self.user_id,
+            # do not serialize the password, its a security breach
+        }
     
 
 
