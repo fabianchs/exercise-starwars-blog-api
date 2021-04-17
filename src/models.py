@@ -114,41 +114,26 @@ class Planets(db.Model):
 
         }
 
-class FavPeople(db.Model):
+class FavsUser(db.Model):
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = db.Column(db.Integer, primary_key=True)
-    people_id = db.Column(db.Integer, primary_key=True)
+    fav_id = db.Column(db.Integer, primary_key=True)
+    fav_name= db.Column(db.String(120), unique=False, nullable=False)
     user_id = db.Column(db.Integer, primary_key=True)
 
     def __repr__(self):
-        return '<Fav People %r>' % self.people_id
+        return '<Favs User %r>' % self.people_id
         
     def serialize(self):
         return {
-            "people_id": self.people_id,
+            "fav_id": self.fav_id,
+            "fav_name": self.fav_name,
             "user_id": self.user_id,
             # do not serialize the password, its a security breach
         }
 
-class FavPlanet(db.Model):
 
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
-    id = db.Column(Integer, primary_key=True)
-    people_id = db.Column(Integer, unique=False, nullable=False)
-    user_id = db.Column(Integer, unique=False, nullable=False)
-
-
-    def __repr__(self):
-        return '<Fav Planet %r>' % self.people_id
-        
-    def serialize(self):
-        return {
-            "people_id": self.people_id,
-            "user_id": self.user_id,
-            # do not serialize the password, its a security breach
-        }
     
 
 

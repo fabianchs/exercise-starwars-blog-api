@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User, FavPeople, FavPlanet, Characters, Planets
+from models import db, User, FavsUser, Characters, Planets
 #from models import Person
 
 app = Flask(__name__)
@@ -75,6 +75,7 @@ def handle_one_planet(planet_id):
         raise APIException('Planet not found, try again please', status_code=404)
     else:
         return jsonify(pl_description), 200
+
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
