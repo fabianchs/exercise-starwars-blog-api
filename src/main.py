@@ -42,11 +42,11 @@ def handle_hello():
 @app.route('/people/<int:people_id>', methods=['GET'])
 def handle_one_character(people_id):
 
-    user = Characters.query.get(people_id)
-    if user is None:
+    character = Characters.query.get(people_id)
+    if character is None:
         raise APIException('Character not found', status_code=404)
     else:
-        return jsonify(user), 200
+        return jsonify(character), 200
 
 
 @app.route('/planets', methods=['GET'])
