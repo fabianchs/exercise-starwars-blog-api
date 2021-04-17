@@ -42,17 +42,16 @@ def handle_hello():
 @app.route('/people/<int:people_id>', methods=['GET'])
 def handle_one_character(people_id):
 
-    character = Characters.query.filter_by(id=people_id)
-    character_exception = Characters.query.get(people_id)
-    #people_query = People.query.filter_by(id=id)
+    character = Characters.query.filter_by(id=people_id)#Este se utiliza para serializar el character
+    character_exception = Characters.query.get(people_id)#Este se utiliza para evaluar si el character existe
 
     # map the results and your list of people  inside of the all_people variable
-    all_people = list(map(lambda x: x.serialize(), character))
+    ch_description = list(map(lambda x: x.serialize(), character))#Carga descripción serializada para pasarle jsonify
 
     if character_exception is None:
-        raise APIException('Character not found :c try again please', status_code=404)
+        raise APIException('Character not found, try again please', status_code=404)
     else:
-        return jsonify(all_people), 200
+        return jsonify(ch_description), 200
 
 
 @app.route('/planets', methods=['GET'])
@@ -62,6 +61,20 @@ def handle_planets():
     all_planets = list(map(lambda x: x.serialize(), planets))
 
     return jsonify(all_planets), 200
+
+@app.route('/planet/<int:planet_id>', methods=['GET'])
+def handle_one_planet(planet_id):
+
+    planet = Planets.query.filter_by(id=planet_id)#Este se utiliza para serializar el character
+    planet_exception = Planets.query.get(planet_id)#Este se utiliza para evaluar si el character existe
+
+    # map the results and your list of people  inside of the all_people variable
+    pl_description = list(map(lambda x: x.serialize(), planet))#Carga descripción serializada para pasarle jsonify
+
+    if planet_exception is None:
+        raise APIException('Planet not found, try again please', status_code=404)
+    else:
+        return jsonify(pl_description), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
