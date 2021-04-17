@@ -42,11 +42,17 @@ def handle_hello():
 @app.route('/people/<int:people_id>', methods=['GET'])
 def handle_one_character(people_id):
 
-    character = Characters.query.get(people_id)
-    if character is None:
-        raise APIException('Character not found', status_code=404)
+    character = Characters.query.filter_by(id=people_id)
+    character_exception = Characters.query.get(people_id)
+    #people_query = People.query.filter_by(id=id)
+
+    # map the results and your list of people  inside of the all_people variable
+    all_people = list(map(lambda x: x.serialize(), character))
+
+    if character_exception is None:
+        raise APIException('Character not found :c try again please', status_code=404)
     else:
-        return jsonify(character), 200
+        return jsonify(all_people), 200
 
 
 @app.route('/planets', methods=['GET'])
