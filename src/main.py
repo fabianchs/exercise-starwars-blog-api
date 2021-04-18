@@ -76,6 +76,13 @@ def handle_one_planet(planet_id):
     else:
         return jsonify(pl_description), 200
 
+@app.route('/favs', methods=['GET'])
+def handle_favs():
+
+    favs=FavsUser.query.all()
+    all_favs= list(map(lambda x: x.serialize(), favs))
+
+    return jsonify(all_favs), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

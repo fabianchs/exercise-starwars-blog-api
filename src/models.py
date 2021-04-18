@@ -127,8 +127,6 @@ class FavsUser(db.Model):
     def serialize(self):
         return {
             "fav_name": self.fav_name,
-            "user_id": self.user_id
-
         }
 
 
