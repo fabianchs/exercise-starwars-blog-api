@@ -118,19 +118,17 @@ class FavsUser(db.Model):
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = db.Column(db.Integer, primary_key=True)
-    fav_id = db.Column(db.Integer, primary_key=True)
     fav_name= db.Column(db.String(120), unique=False, nullable=False)
-    user_id = db.Column(db.Integer, primary_key=True)
+
 
     def __repr__(self):
         return '<Favs User %r>' % self.people_id
         
     def serialize(self):
         return {
-            "fav_id": self.fav_id,
             "fav_name": self.fav_name,
-            "user_id": self.user_id,
-            # do not serialize the password, its a security breach
+            "user_id": self.user_id
+
         }
 
 
