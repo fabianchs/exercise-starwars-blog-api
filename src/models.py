@@ -53,7 +53,7 @@ class Characters(db.Model):
 
     def serialize(self):
         return {
-            "people_id": self.people_id,
+            "internal_id": self.id,
             "birth_year": self.birth_year,
             "eye_color": self.eye_color,
             "films" : self.films,
@@ -96,6 +96,7 @@ class Planets(db.Model):
         return '<Planets %r>' % self.id
     def serialize(self):
         return {
+            "internal_id": self.id,
             "climate": self.climate,
             "created": self.created,
             "diameter": self.diameter,
@@ -126,6 +127,7 @@ class FavsUser(db.Model):
         
     def serialize(self):
         return {
+            "internal_id": self.id,
             "fav_name": self.fav_name,
         }
 

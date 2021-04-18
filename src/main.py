@@ -53,6 +53,17 @@ def handle_one_character(people_id):
     else:
         return jsonify(ch_description), 200
 
+@app.route('/newcharacter/', methods=['POST'])
+def new_char():
+
+    request_body=request.get_json()
+    
+    new_char = Characters(birth_year=request_body["birth_year"], eye_color=request_body["eye_color"], films=request_body["films"], gender=request_body["gender"], hair_color=request_body["hair_color"], height=request_body["height"], homeworld=request_body["homeworld"], mass=request_body["mass"], name=request_body["name"], skin_color=request_body["skin_color"], created=request_body["created"], edited=request_body["edited"], species=request_body["species"], starships=request_body["starships"], url=request_body["url"], vehicles=request_body["vehicles"])
+
+    db.session.add(new_char)
+    db.session.commit()
+
+    return jsonify("Character added correctly"), 200
 
 @app.route('/planets', methods=['GET'])
 def handle_planets():
@@ -84,7 +95,33 @@ def handle_favs():
 
     return jsonify(all_favs), 200
 
+@app.route('/newfav/', methods=['POST'])
+def new_fav():
+
+    request_body=request.get_json()
+    
+    new_fav = FavsUser(fav_name=request_body["fav_name"])
+
+    db.session.add(new_fav)
+    db.session.commit()
+
+    return jsonify("Favorite added correctly"), 200
+
+@app.route('/delfav/<int:fav_id>', methods=['DELETE'])
+def del_fav(fav_id):
+
+    fav_obtained = FavsUser.query.get(fav_id)
+
+    if fav_obtained is None:
+        raise APIException('Favorite not found', status_code=404)
+    else:
+        db.session.delete(fav_obtained)
+        db.session.commit()
+        return jsonify("Favorite deleted correctly"), 200
+
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
     app.run(host='0.0.0.0', port=PORT, debug=False)
+
