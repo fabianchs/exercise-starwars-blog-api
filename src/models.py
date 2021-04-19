@@ -30,23 +30,19 @@ class Characters(db.Model):
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = db.Column(db.Integer, primary_key=True)
-    people_id = db.Column(db.String(120), unique=False, nullable=False)
-    birth_year = db.Column(db.String(120), unique=False, nullable=False)
-    eye_color = db.Column(db.String(120), unique=False, nullable=False)
-    films = db.Column(db.String(120), unique=False, nullable=False)
-    gender = db.Column(db.String(120),unique=False, nullable=False)
-    hair_color = db.Column(db.String(120), unique=False, nullable=False)
-    height = db.Column(db.String(120), unique=False, nullable=False)
-    homeworld = db.Column(db.String(120), unique=False, nullable=False)
-    mass= db.Column(db.String(120), unique=False, nullable=False)
-    name= db.Column(db.String(120), unique=False, nullable=False)
-    skin_color = db.Column(db.String(120), unique=False, nullable=False)
-    created = db.Column(db.String(120), unique=False, nullable=False)
-    edited = db.Column(db.String(120), unique=False, nullable=False)
-    species = db.Column(db.String(120), unique=False, nullable=False)
-    starships = db.Column(db.String(120), unique=False, nullable=False)
-    url = db.Column(db.String(120), unique=False, nullable=False)
-    vehicles = db.Column(db.String(120), unique=False, nullable=False)
+    birth_year = db.Column(db.String(120), unique=False, nullable=True)
+    eye_color = db.Column(db.String(120), unique=False, nullable=True)
+    gender = db.Column(db.String(120),unique=False, nullable=True)
+    hair_color = db.Column(db.String(120), unique=False, nullable=True)
+    height = db.Column(db.String(120), unique=False, nullable=True)
+    homeworld = db.Column(db.String(120), unique=False, nullable=True)
+    mass= db.Column(db.String(120), unique=False, nullable=True)
+    name= db.Column(db.String(120), unique=False, nullable=True)
+    skin_color = db.Column(db.String(120), unique=False, nullable=True)
+    created = db.Column(db.String(120), unique=False, nullable=True)
+    edited = db.Column(db.String(120), unique=False, nullable=True)
+    url = db.Column(db.String(120), unique=False, nullable=True)
+
 
     def __repr__(self):
         return '<Characters %r>' % self.people_id
@@ -56,7 +52,6 @@ class Characters(db.Model):
             "internal_id": self.id,
             "birth_year": self.birth_year,
             "eye_color": self.eye_color,
-            "films" : self.films,
             "hair_color": self.hair_color,
             "height": self.height,
             "homeworld": self.homeworld,
@@ -65,10 +60,7 @@ class Characters(db.Model):
             "skin_color":  self.skin_color,
             "created": self.created,
             "edited":  self.edited,
-            "species": self.species,
-            "starships": self.starships,
             "url": self.url,
-            "vehicles": self.vehicles
         }
 
     
@@ -76,21 +68,19 @@ class Planets(db.Model):
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = db.Column(db.Integer, primary_key=True)
-    climate = db.Column(db.String(120), unique=False, nullable=False)
-    created = db.Column(db.String(120), unique=False, nullable=False)
-    diameter = db.Column(db.String(120), unique=False, nullable=False)
-    edited = db.Column(db.String(120), unique=False, nullable=False)
-    films = db.Column(db.String(120), unique=False, nullable=False)
-    gravity = db.Column(db.String(120), unique=False, nullable=False)
-    name = db.Column(db.String(120), unique=False, nullable=False)
-    orbital_period = db.Column(db.String(120), unique=False, nullable=False)
-    population= db.Column(db.String(120), unique=False, nullable=False)
-    residents= db.Column(db.String(120), unique=False, nullable=False)
-    rotation_period = db.Column(db.String(120), unique=False, nullable=False)
-    surface_water = db.Column(db.String(120), unique=False, nullable=False)
-    terrain = db.Column(db.String(120), unique=False, nullable=False)
+    climate = db.Column(db.String(120), unique=False, nullable=True)
+    created = db.Column(db.String(120), unique=False, nullable=True)
+    diameter = db.Column(db.String(120), unique=False, nullable=True)
+    edited = db.Column(db.String(120), unique=False, nullable=True)
+    gravity = db.Column(db.String(120), unique=False, nullable=True)
+    name = db.Column(db.String(120), unique=False, nullable=True)
+    orbital_period = db.Column(db.String(120), unique=False, nullable=True)
+    population= db.Column(db.String(120), unique=False, nullable=True)
+    rotation_period = db.Column(db.String(120), unique=False, nullable=True)
+    surface_water = db.Column(db.String(120), unique=False, nullable=True)
+    terrain = db.Column(db.String(120), unique=False, nullable=True)
     url = db.Column(db.String(120), unique=False, nullable=False)
-    starships = db.Column(db.String(120), unique=False, nullable=False)
+
 
     def __repr__(self):
         return '<Planets %r>' % self.id
@@ -101,18 +91,14 @@ class Planets(db.Model):
             "created": self.created,
             "diameter": self.diameter,
             "edited" : self.edited,
-            "films": self.films,
             "gravity": self.gravity,
             "name": self.name,
             "orbital_period": self.orbital_period,
             "population": self.population,
-            "residents":  self.residents,
             "rotation_period": self.rotation_period,
             "surface_water":  self.surface_water,
             "terrain": self.terrain,
             "url": self.url,
-            "starships": self.starships
-
         }
 
 class FavsUser(db.Model):

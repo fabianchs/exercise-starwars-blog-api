@@ -58,7 +58,7 @@ def new_char():
 
     request_body=request.get_json()
     
-    new_char = Characters(birth_year=request_body["birth_year"], eye_color=request_body["eye_color"], films=request_body["films"], gender=request_body["gender"], hair_color=request_body["hair_color"], height=request_body["height"], homeworld=request_body["homeworld"], mass=request_body["mass"], name=request_body["name"], skin_color=request_body["skin_color"], created=request_body["created"], edited=request_body["edited"], species=request_body["species"], starships=request_body["starships"], url=request_body["url"], vehicles=request_body["vehicles"])
+    new_char = Characters(birth_year=request_body["birth_year"], eye_color=request_body["eye_color"], gender=request_body["gender"], hair_color=request_body["hair_color"], height=request_body["height"], homeworld=request_body["homeworld"], mass=request_body["mass"], name=request_body["name"], skin_color=request_body["skin_color"], created=request_body["created"], edited=request_body["edited"], url=request_body["url"])
 
     db.session.add(new_char)
     db.session.commit()
@@ -86,6 +86,18 @@ def handle_one_planet(planet_id):
         raise APIException('Planet not found, try again please', status_code=404)
     else:
         return jsonify(pl_description), 200
+
+@app.route('/newplanet/', methods=['POST'])
+def new_plan():
+
+    request_body=request.get_json()
+    
+    new_planet = Planets(climate=request_body["climate"], diameter=request_body["diameter"], edited=request_body["edited"], gravity=request_body["gravity"], name=request_body["name"], orbital_period=request_body["orbital_period"], population=request_body["population"], rotation_period=request_body["rotation_period"], surface_water=request_body["surface_water"], terrain=request_body["terrain"], url=request_body["url"])
+
+    db.session.add(new_planet)
+    db.session.commit()
+
+    return jsonify("Planet added correctly"), 200
 
 @app.route('/favs', methods=['GET'])
 def handle_favs():
@@ -119,7 +131,21 @@ def del_fav(fav_id):
         db.session.commit()
         return jsonify("Favorite deleted correctly"), 200
 
+@app.route('/delallplanets', methods=['DELETE'])
+def del_plan():
 
+    Planets.query.delete()
+    db.session.commit()
+
+    return jsonify("All planets were deleted"), 200
+
+@app.route('/delallcharacters', methods=['DELETE'])
+def del_char():
+
+    Characters.query.delete()
+    db.session.commit()
+
+    return jsonify("All characters were deleted"), 200
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
