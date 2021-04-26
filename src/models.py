@@ -106,6 +106,8 @@ class FavsUser(db.Model):
     # Notice that each column is also a normal Python instance attribute.
     id = db.Column(db.Integer, primary_key=True)
     fav_name= db.Column(db.String(120), unique=False, nullable=False)
+    id_user = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship(User, foreign_keys=[id_user])
 
 
     def __repr__(self):
@@ -115,6 +117,7 @@ class FavsUser(db.Model):
         return {
             "internal_id": self.id,
             "fav_name": self.fav_name,
+            "id_user" :self.id_user
         }
 
 

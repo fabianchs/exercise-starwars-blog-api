@@ -11,6 +11,9 @@ from admin import setup_admin
 from models import db, User, FavsUser, Characters, Planets
 #from models import Person
 
+#import JWT for tokenization
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_CONNECTION_STRING')
@@ -29,6 +32,11 @@ def handle_invalid_usage(error):
 @app.route('/')
 def sitemap():
     return generate_sitemap(app)
+
+# config for jwt
+app.config["JWT_SECRET_KEY"] = "super-secret"
+jwt = JWTManager(app)
+
 
 @app.route('/people', methods=['GET'])
 def handle_hello():
