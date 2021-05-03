@@ -23,6 +23,10 @@ db.init_app(app)
 CORS(app)
 setup_admin(app)
 
+# config for jwt
+app.config["JWT_SECRET_KEY"] = "super-secret"
+jwt = JWTManager(app)
+
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
@@ -33,9 +37,18 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-# config for jwt
-app.config["JWT_SECRET_KEY"] = "super-secret"
-jwt = JWTManager(app)
+
+# Create a route to authenticate your users and return JWTs. The
+# create_access_token() function is used to actually generate the JWT.
+@app.route("/token", methods=["POST"])
+def create_token():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    if email != "test" or password != "test":
+        return jsonify({"msg": "Correo o contraseña incorrectos"}), 401
+
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
 
 
 @app.route('/people', methods=['GET'])
