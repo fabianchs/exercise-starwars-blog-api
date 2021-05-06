@@ -52,12 +52,19 @@ def create_token():
 
 
 @app.route('/people', methods=['GET'])
-def handle_hello():
+def handle_people():
 
     people=Characters.query.all()
     all_people = list(map(lambda x: x.serialize(), people))
 
     return jsonify(all_people), 200
+
+@app.route("/hello", methods=["POST"])
+@jwt_required()
+def create_hello():
+
+    dictionary= {"message" : "hello world"}
+    return jsonify(dictionary)
 
 
 @app.route('/people/<int:people_id>', methods=['GET'])
