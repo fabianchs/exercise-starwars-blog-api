@@ -47,9 +47,45 @@ def create_token():
     if email != "test" or password != "test":
         return jsonify({"msg": "Correo o contraseña incorrectos"}), 401
 
-    access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    
+    if email is None:
+        return jsonify({"msg": "No email was provided"}), 400
+    if password is None:
+        return jsonify({"msg": "No password was provided"}), 400
 
+    user = User.query.filter_by(email=email, password=password).first()
+    if user is None:
+        # the user was not found on the database
+        return jsonify({"msg": "Invalid username or password"}), 401
+    else:
+        print(user)
+        # create a new token with the user id inside
+        access_token = create_access_token(identity=user.id)
+        return jsonify({ "token": access_token, "user_id": user.id }), 200
+
+
+@app.route('/register', methods=['POST'])
+def register_user():
+
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+
+    if email is None:
+        return jsonify({"msg": "No email was provided"}), 400
+    if password is None:
+        return jsonify({"msg": "No password was provided"}), 400
+    
+    user = User.query.filter_by(email=email, password=password).first()
+    if user:
+        return jsonify({"msg": "User already exists"}), 401
+    else:
+        new_user = User()
+        new_user.email = email
+        new_user.password = password
+
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"msg": "User created successfully"}), 200
 
 @app.route('/people', methods=['GET'])
 def handle_people():
